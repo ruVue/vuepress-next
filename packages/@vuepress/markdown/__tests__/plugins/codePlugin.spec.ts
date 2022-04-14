@@ -267,17 +267,33 @@ function bar () {
 ${codeFence}
 `
 
-    it('should work properly if `vPre` is enabled by default', () => {
+    it('should work properly if `vPre` is set to "always"', () => {
       const md = MarkdownIt().use(codePlugin, {
-        vPre: true,
+        vPre: 'always',
       })
 
       expect(md.render(source)).toMatchSnapshot()
     })
 
-    it('should work properly if `vPre` is disabled by default', () => {
+    it('should work properly if `vPre` is set to "never"', () => {
       const md = MarkdownIt().use(codePlugin, {
-        vPre: false,
+        vPre: 'never',
+      })
+
+      expect(md.render(source)).toMatchSnapshot()
+    })
+
+    it('should work properly if `vPre` is set to "block"', () => {
+      const md = MarkdownIt().use(codePlugin, {
+        vPre: 'block',
+      })
+
+      expect(md.render(source)).toMatchSnapshot()
+    })
+
+    it('should work properly if `vPre` is set to "inline"', () => {
+      const md = MarkdownIt().use(codePlugin, {
+        vPre: 'inline',
       })
 
       expect(md.render(source)).toMatchSnapshot()
@@ -326,6 +342,52 @@ ${codeFence}
 
       expect(md.render(source)).toMatchSnapshot()
       expect(highlight).toHaveBeenCalledTimes(3)
+    })
+  })
+
+  describe('syntax highlighting', () => {
+    const source = `\
+\`single inline code\`
+
+An \`inline code\` with text.
+`
+
+    it('should work properly if `vPre` is not set', () => {
+      const md = MarkdownIt().use(codePlugin)
+
+      expect(md.render(source)).toMatchSnapshot()
+    })
+
+    it('should work properly if `vPre` is set to "always"', () => {
+      const md = MarkdownIt().use(codePlugin, {
+        vPre: 'always',
+      })
+
+      expect(md.render(source)).toMatchSnapshot()
+    })
+
+    it('should work properly if `vPre` is set to "never"', () => {
+      const md = MarkdownIt().use(codePlugin, {
+        vPre: 'never',
+      })
+
+      expect(md.render(source)).toMatchSnapshot()
+    })
+
+    it('should work properly if `vPre` is set to "block"', () => {
+      const md = MarkdownIt().use(codePlugin, {
+        vPre: 'block',
+      })
+
+      expect(md.render(source)).toMatchSnapshot()
+    })
+
+    it('should work properly if `vPre` is set to "inline"', () => {
+      const md = MarkdownIt().use(codePlugin, {
+        vPre: 'inline',
+      })
+
+      expect(md.render(source)).toMatchSnapshot()
     })
   })
 })
