@@ -37,6 +37,7 @@ export const resolveAppOptions = ({
   debug = false,
   open = false,
   pagePatterns = ['**/*.md', '!.vuepress', '!node_modules'],
+  permalinkPattern = null,
   templateDev = path.normalize(
     require.resolve('@vuepress/client/templates/index.dev.html')
   ),
@@ -70,6 +71,7 @@ export const resolveAppOptions = ({
   port,
   open,
   pagePatterns,
+  permalinkPattern,
   templateDev,
   templateBuild,
   shouldPreload,

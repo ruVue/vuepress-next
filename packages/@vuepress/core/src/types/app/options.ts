@@ -26,6 +26,7 @@ export type AppConfig<
 
     debug?: boolean
     pagePatterns?: string[]
+    permalinkPattern?: string | null
 
     markdown?: MarkdownOptions
     plugins?: PluginConfig[]
