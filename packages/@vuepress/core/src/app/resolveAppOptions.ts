@@ -1,4 +1,5 @@
-import { path } from '@vuepress/utils'
+import { ensureEndingSlash, ensureLeadingSlash } from '@vuepress/shared'
+import { logger, path } from '@vuepress/utils'
 import type { AppConfig, AppOptions } from '../types'
 
 /**
@@ -48,31 +49,40 @@ export const resolveAppOptions = ({
 
   // plugin config
   plugins = [],
-}: AppConfig): AppOptions => ({
-  base,
-  lang,
-  title,
-  description,
-  head,
-  locales,
-  theme,
-  themeConfig,
-  bundler,
-  bundlerConfig,
-  source,
-  dest,
-  temp,
-  cache,
-  public: publicDir,
-  markdown,
-  debug,
-  host,
-  port,
-  open,
-  pagePatterns,
-  templateDev,
-  templateBuild,
-  shouldPreload,
-  shouldPrefetch,
-  plugins,
-})
+}: AppConfig): AppOptions => {
+  if (source.includes(dest)) {
+    logger.warn(
+      'Dest folder wound be emptyed during build, so it must not include source folder.'
+    )
+    dest = path.resolve(source, '.vuepress/dist')
+  }
+
+  return {
+    base: ensureLeadingSlash(ensureEndingSlash(base)) as '/' | `/${string}/`,
+    lang,
+    title,
+    description,
+    head,
+    locales,
+    theme,
+    themeConfig,
+    bundler,
+    bundlerConfig,
+    source,
+    dest,
+    temp,
+    cache,
+    public: publicDir,
+    markdown,
+    debug,
+    host,
+    port,
+    open,
+    pagePatterns,
+    templateDev,
+    templateBuild,
+    shouldPreload,
+    shouldPrefetch,
+    plugins,
+  }
+}
